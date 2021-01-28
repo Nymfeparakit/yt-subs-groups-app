@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { View, FlatList, StyleSheet } from 'react-native'
 import ChannelRect from '../components/ChannelRect'
+import Faker from 'faker'
 
 const ChannelsListScreen = () => {
     
@@ -8,12 +9,21 @@ const ChannelsListScreen = () => {
     const [channels, setChannels] = useState([])
 
     useEffect(() => {
-        fetch('http://a3c81782cb7f.ngrok.io')
-        .then(response => response.json())
-        .then((data) => {
-            console.log(data)
-            setChannels(data)
-        }) 
+        // fetch('http://a3c81782cb7f.ngrok.io')
+        // .then(response => response.json())
+        // .then((data) => {
+        //     console.log(data)
+        //     setChannels(data)
+        // })
+        tmpChannels = [];
+        for (var i = 0; i < 10; ++i) {
+            tmpChannels.push({
+                'title': Faker.name.findName(),
+                'icon_url': Faker.image.cats()
+            })
+        } 
+        console.log(tmpChannels)
+        setChannels(tmpChannels);
     }, []);
 
     return (
