@@ -8,7 +8,7 @@ const ChannelsListScreen = () => {
     const [channels, setChannels] = useState([])
 
     useEffect(() => {
-        fetch('http://ea83e6f58e56.ngrok.io')
+        fetch('http://a3c81782cb7f.ngrok.io')
         .then(response => response.json())
         .then((data) => {
             console.log(data)

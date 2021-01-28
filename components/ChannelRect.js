@@ -15,7 +15,12 @@ const ChannelRect = ({ title, icon_url }) => {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1, flexDirection: 'row'
+        flex: 1, 
+        flexDirection: 'row',
+        marginVertical: 10,
+        marginHorizontal: 8,
+        backgroundColor: "#DCDCDC",
+        alignItems: "center"
     },
     title: {
         fontWeight: 'bold'        
