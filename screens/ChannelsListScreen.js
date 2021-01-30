@@ -15,8 +15,8 @@ const ChannelsListScreen = () => {
 
         // console.log("item id: " + item.id)
 
-        const onPress = (id) => {
-            setSelectedId(id)
+        const onPress = (index) => {
+            setSelectedId(index)
         }
 
         return (
