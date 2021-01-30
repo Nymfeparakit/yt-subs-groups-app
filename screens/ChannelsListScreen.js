@@ -9,18 +9,24 @@ const ChannelsListScreen = () => {
     const [channels, setChannels] = useState([])
     const [selectedId, setSelectedId] = useState(null)
 
-    const renderItem = ({ item }) => {
-        const backgroundColor = item.id === selectedId ? "#6e3b6e" : "#f9c2ff"
+    const renderItem = ({ item, index}) => {
+        // const backgroundColor = item.id === selectedId ? "#f9c2ff" : "#6e3b6e"
+        const backgroundColor = index === selectedId ? "#f9c2ff" : "#6e3b6e"
+
+        // console.log("item id: " + item.id)
+
+        const onPress = (id) => {
+            setSelectedId(id)
+        }
 
         return (
-        <TouchableOpacity
-            onLongPress={() => setSelectedId(item.id)}>
             <ChannelRect
+                id={index}
                 style={{ backgroundColor }}
+                onPress={() => onPress(index)}
                 title={item["title"]}
                 icon_url={item["icon_url"]}
-            />
-        </TouchableOpacity>)
+            />)
     }
 
     useEffect(() => {
@@ -37,7 +43,6 @@ const ChannelsListScreen = () => {
                 'icon_url': Faker.image.cats()
             })
         }
-        console.log(tmpChannels)
         setChannels(tmpChannels);
     }, []);
 

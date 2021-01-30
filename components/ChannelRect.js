@@ -1,15 +1,18 @@
 import React from 'react'
 import { View, StyleSheet, Text, Image } from 'react-native'
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
-const ChannelRect = ({ title, icon_url }) => {
+const ChannelRect = ({ title, icon_url, style, onPress, id }) => {
     return (
-        <View style={styles.container}>
+        <TouchableOpacity 
+        style={[styles.container, style]}
+        onLongPress={() => onPress(id)}>
             <Image 
                 source={{uri: icon_url}}
                 style={styles.channel_icon}
             />
             <Text style={styles.title}>{ title }</Text>
-        </View>
+        </TouchableOpacity>
     );
 };
 
