@@ -11,7 +11,6 @@ const CreateNewGroupScreen = () => {
                 'Content-Type': 'application/json' 
             },
             body: JSON.stringify({'name': newFeed})
-            //body: {'name': newFeed}
         }).then(response => response.json())
         .then(data => console.log("posted new feed"))
     }
@@ -23,7 +22,6 @@ const CreateNewGroupScreen = () => {
             <Text>Name:</Text>
             <TextInput 
             onSubmitEditing={(event) => createFeed(event.nativeEvent.text)}
-            //onSubmitEditing={(event) => console.log(event.nativeEvent.text)}
             />
         </View>
     )
