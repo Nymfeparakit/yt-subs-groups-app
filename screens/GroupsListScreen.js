@@ -5,7 +5,7 @@ import Faker from 'faker'
 import { AntDesign } from '@expo/vector-icons'
 
 
-const GroupsListScreen = () => {
+const GroupsListScreen = ({ navigation }) => {
 
     const [channels, setChannels] = useState([])
     const [selectedId, setSelectedId] = useState(null)
@@ -52,7 +52,9 @@ const GroupsListScreen = () => {
                 renderItem={renderItem}
                 keyExtractor={item => item["title"]}
             />
-            <TouchableOpacity style={styles.bottomButton}>
+            <TouchableOpacity 
+            style={styles.bottomButton}
+            onPress={() => navigation.navigate('New group')}>
                 <AntDesign name="pluscircle" size={24} color="black" />
             </TouchableOpacity>
         </SafeAreaView>
