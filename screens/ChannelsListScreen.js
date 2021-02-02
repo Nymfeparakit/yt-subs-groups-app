@@ -7,16 +7,18 @@ import Faker from 'faker'
 const ChannelsListScreen = () => {
 
     const [channels, setChannels] = useState([])
-    const [selectedId, setSelectedId] = useState(null)
+    //const [selectedId, setSelectedId] = useState(null)
+    const [selectedIds, setSelectedIds] = useState([])
 
     const renderItem = ({ item, index}) => {
-        // const backgroundColor = item.id === selectedId ? "#f9c2ff" : "#6e3b6e"
-        const backgroundColor = index === selectedId ? "#f9c2ff" : "#6e3b6e"
-
-        // console.log("item id: " + item.id)
-
+        //const backgroundColor = index === selectedId ? "#f9c2ff" : "#6e3b6e"
+        const backgroundColor = selectedIds.includes(index) ? "#f9c2ff" : "#6e3b6e"
+        
         const onPress = (index) => {
-            setSelectedId(index)
+            selectedIds.includes(index) 
+            ? setSelectedIds(selectedIds.filter(item => item !== index)) 
+            : setSelectedIds([...selectedIds, index])
+            //setSelectedId(index)
         }
 
         return (
