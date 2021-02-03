@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { View, FlatList, StyleSheet, TouchableOpacity } from 'react-native'
 import ChannelRect from '../components/ChannelRect'
 import Faker from 'faker'
+import { AntDesign } from '@expo/vector-icons'
 
 
-const ChannelsListScreen = () => {
+const ChannelsListScreen = ({ navigation }) => {
 
     const [channels, setChannels] = useState([])
     //const [selectedId, setSelectedId] = useState(null)
@@ -55,13 +56,27 @@ const ChannelsListScreen = () => {
                 renderItem={renderItem}
                 keyExtractor={item => item["title"]}
             />
+            <TouchableOpacity 
+                style={styles.bottomButton}
+                onPress={() => navigation.navigate('Choose group')}>
+                <AntDesign name="pluscircle" size={24} color="black" />
+            </TouchableOpacity>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: 50
+        // marginTop: 50,
+        flex: 1,
+        justifyContent: 'space-between'
+    },
+    list: {
+        height: '60%'
+    },
+    bottomButton: {
+        flex: 1,
+        alignSelf: 'center'
     }
 })
 

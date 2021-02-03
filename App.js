@@ -6,16 +6,27 @@ import { createStackNavigator } from '@react-navigation/stack'
 import ChannelsListScreen from './screens/ChannelsListScreen'
 import GroupsListScreen from './screens/GroupsListScreen'
 import CreateNewGroupScreen from './screens/CreateNewGroupScreen';
+import ChooseGroupScreen from './screens/ChooseGroupScreen'
 
 const Drawer = createDrawerNavigator();
-const Stack = createStackNavigator();
+const GroupsStack = createStackNavigator();
+const ChannelsStack = createStackNavigator(); 
 
 function Groups() {
   return (
-    <Stack.Navigator initialRouteName="Groups list">
-      <Stack.Screen name="Groups list" component={GroupsListScreen}/>
-      <Stack.Screen name="New group" component={CreateNewGroupScreen}/>
-    </Stack.Navigator>
+    <GroupsStack.Navigator initialRouteName="Groups list">
+      <GroupsStack.Screen name="Groups list" component={GroupsListScreen}/>
+      <GroupsStack.Screen name="New group" component={CreateNewGroupScreen}/>
+    </GroupsStack.Navigator>
+  )
+}
+
+function Channels() {
+  return (
+    <ChannelsStack.Navigator initialRouteName="Channels list">
+      <ChannelsStack.Screen name="Choose group" component={ChooseGroupScreen}/>
+      <ChannelsStack.Screen name="Channels list" component={ChannelsListScreen}/>
+    </ChannelsStack.Navigator>
   )
 }
 
@@ -23,9 +34,9 @@ export default function App() {
   return (
     <NavigationContainer>
       <Drawer.Navigator initialRouteName="Channels">
-        <Drawer.Screen name="Channels" component={ChannelsListScreen}/>
+        {/* <Drawer.Screen name="Channels" component={ChannelsListScreen}/> */}
+        <Drawer.Screen name="Channels" component={Channels}/>
         <Drawer.Screen name="Groups" component={Groups}/>
-        {/* <Drawer.Screen name="Groups" component={GroupsListScreen}/> */}
       </Drawer.Navigator>
     </NavigationContainer>
   );
