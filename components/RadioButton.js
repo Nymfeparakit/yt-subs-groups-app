@@ -8,8 +8,9 @@ const RadioButton = ({ selected, title }) => {
     // console.log(props.selected)
 
     return (
-        <View flexDirection="row">
+        <View style={styles.container} flexDirection="row">
             <View style={[{
+                marginHorizontal: 5,
                 height: 24,
                 width: 24,
                 borderRadius: 12,
@@ -33,5 +34,11 @@ const RadioButton = ({ selected, title }) => {
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        marginVertical: 10
+    },
+})
 
 export default RadioButton
