@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import RadioButton from '../components/RadioButton'
-import { FlatList, TouchableOpacity } from 'react-native'
+import { FlatList, TouchableOpacity, Button, View, StyleSheet } from 'react-native'
 import Faker from 'faker'
 
 
@@ -18,25 +18,44 @@ const ChooseGroupScreen = () => {
             })
         }
         setGroups(tmpGroups);
-    }, []) 
+    }, [])
 
     const renderItem = ({ item, index }) => {
 
         return (
             <TouchableOpacity
-            onPress={() => setSelectedId(index)}>
-                <RadioButton title={item['title']} selected={selectedId === index}/>            
+                onPress={() => setSelectedId(index)}>
+                <RadioButton title={item['title']} selected={selectedId === index} />
             </TouchableOpacity>
         )
     }
 
     return (
-        <FlatList 
-        data={groups}
-        keyExtractor={item => item['title']}
-        renderItem={renderItem}/>
-        // <RadioButton selected={true}/>
+        <View style={styles.container}>
+            <FlatList
+                data={groups}
+                keyExtractor={item => item['title']}
+                renderItem={renderItem} />
+            {
+                selectedId ?
+                <Button style={styles.addButton} title="ADD TO GROUP"></Button>
+                : null
+            }
+        </View>
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        justifyContent: 'space-between'
+    },
+    // list: {
+
+    // },
+    addButton: {
+        alignSelf: 'center'
+    }
+})
 
 export default ChooseGroupScreen
