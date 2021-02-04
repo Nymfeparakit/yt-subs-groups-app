@@ -56,11 +56,15 @@ const ChannelsListScreen = ({ navigation }) => {
                 renderItem={renderItem}
                 keyExtractor={item => item["title"]}
             />
-            <TouchableOpacity 
-                style={styles.bottomButton}
-                onPress={() => navigation.navigate('Choose group')}>
-                <AntDesign name="pluscircle" size={24} color="black" />
-            </TouchableOpacity>
+            {
+                typeof selectedIds !== 'undefined' && selectedIds.length > 0 ?
+                <TouchableOpacity 
+                    style={styles.bottomButton}
+                    onPress={() => navigation.navigate('Choose group')}>
+                    <AntDesign name="pluscircle" size={24} color="black" />
+                </TouchableOpacity>
+                : null
+            }
         </View>
     );
 }
