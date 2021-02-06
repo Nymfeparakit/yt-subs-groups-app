@@ -60,7 +60,14 @@ const ChannelsListScreen = ({ navigation }) => {
                 typeof selectedIds !== 'undefined' && selectedIds.length > 0 ?
                 <TouchableOpacity 
                     style={styles.bottomButton}
-                    onPress={() => navigation.navigate('Choose group')}>
+                    onPress={() => {
+                        channelsTitles = []
+                        channels.forEach((item, index) => {
+                            if (selectedIds.includes(index)) {
+                                channelsTitles.push(item['title'])
+                            }
+                        })
+                        navigation.navigate('Choose group', {channels: channelsTitles})}}>
                     <AntDesign name="pluscircle" size={24} color="black" />
                 </TouchableOpacity>
                 : null
