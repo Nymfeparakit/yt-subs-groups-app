@@ -4,7 +4,9 @@ import { FlatList, TouchableOpacity, Button, View, StyleSheet } from 'react-nati
 import Faker from 'faker'
 
 
-const ChooseGroupScreen = () => {
+const ChooseGroupScreen = ({ route }) => {
+
+    const { channels } = route.params
 
     const [groups, setGroups] = useState([])
     const [selectedId, setSelectedId] = useState(null)
