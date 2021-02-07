@@ -11,14 +11,14 @@ const ChannelsListScreen = ({ navigation }) => {
     //const [selectedId, setSelectedId] = useState(null)
     const [selectedIds, setSelectedIds] = useState([])
 
-    const renderItem = ({ item, index}) => {
+    const renderItem = ({ item, index }) => {
         //const backgroundColor = index === selectedId ? "#f9c2ff" : "#6e3b6e"
         const backgroundColor = selectedIds.includes(index) ? "#f9c2ff" : "#6e3b6e"
-        
+
         const onPress = (index) => {
-            selectedIds.includes(index) 
-            ? setSelectedIds(selectedIds.filter(item => item !== index)) 
-            : setSelectedIds([...selectedIds, index])
+            selectedIds.includes(index)
+                ? setSelectedIds(selectedIds.filter(item => item !== index))
+                : setSelectedIds([...selectedIds, index])
             //setSelectedId(index)
         }
 
@@ -33,20 +33,20 @@ const ChannelsListScreen = ({ navigation }) => {
     }
 
     useEffect(() => {
-        // fetch('http://a3c81782cb7f.ngrok.io')
-        // .then(response => response.json())
-        // .then((data) => {
-        //     console.log(data)
-        //     setChannels(data)
-        // })
-        tmpChannels = [];
-        for (var i = 0; i < 10; ++i) {
-            tmpChannels.push({
-                'title': Faker.name.findName(),
-                'icon_url': Faker.image.cats()
-            })
-        }
-        setChannels(tmpChannels);
+        fetch('http://29ddd3447360.ngrok.io/channels/')
+        .then(response => response.json())
+        .then((data) => {
+            console.log(data)
+            setChannels(data)
+        })
+        // tmpChannels = [];
+        // for (var i = 0; i < 10; ++i) {
+        //     tmpChannels.push({
+        //         'title': Faker.name.findName(),
+        //         'icon_url': Faker.image.cats()
+        //     })
+        // }
+        // setChannels(tmpChannels);
     }, []);
 
     return (
@@ -58,19 +58,22 @@ const ChannelsListScreen = ({ navigation }) => {
             />
             {
                 typeof selectedIds !== 'undefined' && selectedIds.length > 0 ?
-                <TouchableOpacity 
-                    style={styles.bottomButton}
-                    onPress={() => {
-                        channelsTitles = []
-                        channels.forEach((item, index) => {
-                            if (selectedIds.includes(index)) {
-                                channelsTitles.push(item['title'])
+                    <TouchableOpacity
+                        style={styles.bottomButton}
+                        onPress={() => {
+                            // channelsTitles = []
+                            // channels.forEach((item, index) => {
+                            //     if (selectedIds.includes(index)) {
+                            //         channelsTitles.push(item['title'])
+                            //     }
+                            // })
+                            // navigation.navigate('Choose group', { channels: channelsTitles })
+                            navigation.navigate('Choose group', {channels})
                             }
-                        })
-                        navigation.navigate('Choose group', {channels: channelsTitles})}}>
-                    <AntDesign name="pluscircle" size={24} color="black" />
-                </TouchableOpacity>
-                : null
+                        }>
+                        <AntDesign name="pluscircle" size={24} color="black" />
+                    </TouchableOpacity>
+                    : null
             }
         </View>
     );
@@ -78,7 +81,6 @@ const ChannelsListScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
     container: {
-        // marginTop: 50,
         flex: 1,
         justifyContent: 'space-between'
     },
