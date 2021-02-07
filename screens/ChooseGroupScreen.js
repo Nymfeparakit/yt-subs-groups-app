@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import RadioButton from '../components/RadioButton'
 import { FlatList, TouchableOpacity, Button, View, StyleSheet } from 'react-native'
 import Faker from 'faker'
+import { addChannelToGroup, getGroups} from '../data/ApiHelper'
 
 
 const ChooseGroupScreen = ({ route }) => {
@@ -12,22 +13,23 @@ const ChooseGroupScreen = ({ route }) => {
     const [selectedId, setSelectedId] = useState(null)
 
     useEffect(() => {
-        const tmpGroups = [];
-        for (var i = 0; i < 10; ++i) {
-            tmpGroups.push({
-                'title': Faker.name.findName(),
-                'icon_url': Faker.image.cats()
-            })
-        }
-        setGroups(tmpGroups);
+        // const tmpGroups = [];
+        // for (var i = 0; i < 10; ++i) {
+        //     tmpGroups.push({
+        //         'title': Faker.name.findName(),
+        //         'icon_url': Faker.image.cats()
+        //     })
+        // }
+        // setGroups(tmpGroups);
+        setGroups(getGroups())
     }, [])
 
     const renderItem = ({ item, index }) => {
 
         return (
             <TouchableOpacity
-                onPress={() => setSelectedId(index)}>
-                <RadioButton title={item['title']} selected={selectedId === index} />
+                onPress={() => setSelectedId(item['id'])}>
+                <RadioButton title={item['title']} selected={selectedId === item['id']} />
             </TouchableOpacity>
         )
     }
@@ -40,7 +42,10 @@ const ChooseGroupScreen = ({ route }) => {
                 renderItem={renderItem} />
             {
                 selectedId ?
-                <Button style={styles.addButton} title="ADD TO GROUP"></Button>
+                <Button 
+                style={styles.addButton} 
+                title="ADD TO GROUP"
+                onPress={addChannelToGroup(item['id'], selectedId)}></Button>
                 : null
             }
         </View>
