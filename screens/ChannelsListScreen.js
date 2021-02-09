@@ -12,8 +12,7 @@ const ChannelsListScreen = ({ navigation }) => {
     const [selectedIds, setSelectedIds] = useState([])
 
     const renderItem = ({ item, index }) => {
-        //const backgroundColor = index === selectedId ? "#f9c2ff" : "#6e3b6e"
-        const backgroundColor = selectedIds.includes(index) ? "#f9c2ff" : "#6e3b6e"
+        const backgroundColor = selectedIds.includes(index) ? "#6e3b6e" : "#f9c2ff"
 
         const onPress = (index) => {
             selectedIds.includes(index)
@@ -33,10 +32,9 @@ const ChannelsListScreen = ({ navigation }) => {
     }
 
     useEffect(() => {
-        fetch('http://29ddd3447360.ngrok.io/channels/')
+        fetch('http://46e56975047d.ngrok.io/channels/')
         .then(response => response.json())
         .then((data) => {
-            console.log(data)
             setChannels(data)
         })
         // tmpChannels = [];
@@ -55,6 +53,7 @@ const ChannelsListScreen = ({ navigation }) => {
                 data={channels}
                 renderItem={renderItem}
                 keyExtractor={item => item["title"]}
+                style={styles.list}
             />
             {
                 typeof selectedIds !== 'undefined' && selectedIds.length > 0 ?
@@ -85,7 +84,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between'
     },
     list: {
-        height: '60%'
+        height: '80%'
     },
     bottomButton: {
         flex: 1,
