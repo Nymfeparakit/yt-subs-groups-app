@@ -8,7 +8,6 @@ import { AntDesign } from '@expo/vector-icons'
 const ChannelsListScreen = ({ navigation }) => {
 
     const [channels, setChannels] = useState([])
-    //const [selectedId, setSelectedId] = useState(null)
     const [selectedIds, setSelectedIds] = useState([])
 
     const renderItem = ({ item, index }) => {
@@ -18,7 +17,6 @@ const ChannelsListScreen = ({ navigation }) => {
             selectedIds.includes(index)
                 ? setSelectedIds(selectedIds.filter(item => item !== index))
                 : setSelectedIds([...selectedIds, index])
-            //setSelectedId(index)
         }
 
         return (
@@ -60,13 +58,6 @@ const ChannelsListScreen = ({ navigation }) => {
                     <TouchableOpacity
                         style={styles.bottomButton}
                         onPress={() => {
-                            // channelsTitles = []
-                            // channels.forEach((item, index) => {
-                            //     if (selectedIds.includes(index)) {
-                            //         channelsTitles.push(item['title'])
-                            //     }
-                            // })
-                            // navigation.navigate('Choose group', { channels: channelsTitles })
                             navigation.navigate('Choose group', {channels})
                             }
                         }>
