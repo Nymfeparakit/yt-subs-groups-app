@@ -21,7 +21,8 @@ const ChooseGroupScreen = ({ route }) => {
         //     })
         // }
         // setGroups(tmpGroups);
-        setGroups(getGroups())
+        getGroups().then(groups => setGroups(groups))
+        console.log("groups: \n" + groups)
     }, [])
 
     const renderItem = ({ item, index }) => {
@@ -29,7 +30,7 @@ const ChooseGroupScreen = ({ route }) => {
         return (
             <TouchableOpacity
                 onPress={() => setSelectedId(item['id'])}>
-                <RadioButton title={item['title']} selected={selectedId === item['id']} />
+                <RadioButton title={item['name']} selected={selectedId === item['id']} />
             </TouchableOpacity>
         )
     }
@@ -38,14 +39,14 @@ const ChooseGroupScreen = ({ route }) => {
         <View style={styles.container}>
             <FlatList
                 data={groups}
-                keyExtractor={item => item['title']}
+                keyExtractor={item => item['name']}
                 renderItem={renderItem} />
             {
                 selectedId ?
                 <Button 
                 style={styles.addButton} 
                 title="ADD TO GROUP"
-                onPress={addChannelToGroup(item['id'], selectedId)}></Button>
+                onPress={addChannelToGroup(channels[0]['id'], selectedId)}></Button>
                 : null
             }
         </View>
