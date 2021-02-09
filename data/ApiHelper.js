@@ -1,6 +1,6 @@
 
-const addChannelToGroup = (channelId, groupId) => {
-    fetch('http://....ngrok.io/channel/update-partial/' + channelId + '/', {
+export const addChannelToGroup = (channelId, groupId) => {
+    fetch('http://b21376844d94.ngrok.io/channel/update-partial/' + channelId + '/', {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -12,10 +12,11 @@ const addChannelToGroup = (channelId, groupId) => {
     .then(data => console.log("added channel to group"))
 }
 
-const getGroups = () => {
-    groups = null
-    fetch('')
+export const getGroups = async () => {
+    var groups = null
+    return await fetch('http://46e56975047d.ngrok.io/feeds/')
     .then(response => response.json())
-    .then(data => groups = data)
-    return groups
+    .then((data) => {
+        return data
+    })
 }
