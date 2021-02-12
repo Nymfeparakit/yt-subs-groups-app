@@ -11,26 +11,26 @@ const ChannelsListScreen = ({ navigation }) => {
     const [selectedIds, setSelectedIds] = useState([])
 
     const renderItem = ({ item, index }) => {
-        const backgroundColor = selectedIds.includes(index) ? "#6e3b6e" : "#f9c2ff"
+        const backgroundColor = selectedIds.includes(item["id"]) ? "#6e3b6e" : "#f9c2ff"
 
-        const onPress = (index) => {
-            selectedIds.includes(index)
-                ? setSelectedIds(selectedIds.filter(item => item !== index))
-                : setSelectedIds([...selectedIds, index])
+        const onPress = (id) => {
+            selectedIds.includes(id)
+                ? setSelectedIds(selectedIds.filter(item => item !== id))
+                : setSelectedIds([...selectedIds, id])
         }
 
         return (
             <ChannelRect
-                id={index}
+                id={item["id"]}
                 style={{ backgroundColor }}
-                onPress={() => onPress(index)}
+                onPress={() => onPress(item["id"])}
                 title={item["title"]}
                 icon_url={item["icon_url"]}
             />)
     }
 
     useEffect(() => {
-        fetch('http://46e56975047d.ngrok.io/channels/')
+        fetch('http://375417ee5b3b.ngrok.io/channels/')
         .then(response => response.json())
         .then((data) => {
             setChannels(data)
