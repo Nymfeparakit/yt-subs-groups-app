@@ -3,6 +3,7 @@ import { View, FlatList, StyleSheet, TouchableOpacity } from 'react-native'
 import ChannelRect from '../components/ChannelRect'
 import Faker from 'faker'
 import { AntDesign } from '@expo/vector-icons'
+import { getChannels } from '../data/ApiHelper'
 
 
 const ChannelsListScreen = ({ navigation }) => {
@@ -30,11 +31,7 @@ const ChannelsListScreen = ({ navigation }) => {
     }
 
     useEffect(() => {
-        fetch('http://375417ee5b3b.ngrok.io/channels/')
-        .then(response => response.json())
-        .then((data) => {
-            setChannels(data)
-        })
+        getChannels().then(fetchedChannels => setChannels(fetchedChannels))
         // tmpChannels = [];
         // for (var i = 0; i < 10; ++i) {
         //     tmpChannels.push({
