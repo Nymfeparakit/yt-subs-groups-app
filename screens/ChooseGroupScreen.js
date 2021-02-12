@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import RadioButton from '../components/RadioButton'
-import { FlatList, TouchableOpacity, Button, View, StyleSheet } from 'react-native'
+import { FlatList, TouchableOpacity, Button, View, StyleSheet, Text } from 'react-native'
 import Faker from 'faker'
 import { addChannelToGroup, getGroups} from '../data/ApiHelper'
 
@@ -22,7 +22,6 @@ const ChooseGroupScreen = ({ route }) => {
         // }
         // setGroups(tmpGroups);
         getGroups().then(groups => setGroups(groups))
-        console.log("groups: \n" + groups)
     }, [])
 
     const renderItem = ({ item, index }) => {
@@ -43,10 +42,14 @@ const ChooseGroupScreen = ({ route }) => {
                 renderItem={renderItem} />
             {
                 selectedId ?
-                <Button 
+                <TouchableOpacity 
                 style={styles.addButton} 
-                title="ADD TO GROUP"
-                onPress={addChannelToGroup(channels[0]['id'], selectedId)}></Button>
+                onPress={() => {
+                    channels.map(channel => addChannelToGroup(channel['id'], channel['title'], selectedId))
+                }
+                }>
+                    <Text>ADD TO GROUP</Text>
+                </TouchableOpacity>
                 : null
             }
         </View>
@@ -58,9 +61,6 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'space-between'
     },
-    // list: {
-
-    // },
     addButton: {
         alignSelf: 'center'
     }
