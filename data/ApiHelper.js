@@ -28,7 +28,7 @@ export const createNewFeed = async (feedName) => {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ 'name': feedName })
+        body: JSON.stringify({ name: feedName })
     }).then(response => response.json())
     .then(data => console.log("posted new feed"))
 }
