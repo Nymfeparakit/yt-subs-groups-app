@@ -1,6 +1,8 @@
 
 export const addChannelToGroup = (channelId, channelName, groupId) => {
-    fetch('http://dde555e60d40.ngrok.io/channels/', {
+    // console.log('group id: ' + groupId)
+    // return 'ddd'
+    fetch('http://8a11e5b6f41b.ngrok.io/channels/', {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -9,7 +11,7 @@ export const addChannelToGroup = (channelId, channelName, groupId) => {
         body: JSON.stringify({
             id: channelId,
             name: channelName,
-            feed: groupId
+            feed_id: groupId
         })
     })
         .then((response) => {
@@ -22,7 +24,7 @@ export const addChannelToGroup = (channelId, channelName, groupId) => {
 }
 
 export const createNewFeed = async (feedName) => {
-    fetch('http://dde555e60d40.ngrok.io/feeds/', {
+    fetch('http://8a11e5b6f41b.ngrok.io/feeds/', {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -34,7 +36,7 @@ export const createNewFeed = async (feedName) => {
 }
 
 export const getGroups = async () => {
-    return await fetch('http://dde555e60d40.ngrok.io/feeds/')
+    return await fetch('http://8a11e5b6f41b.ngrok.io/feeds/')
         .then(response => response.json())
         .then((data) => {
             return data
@@ -42,7 +44,7 @@ export const getGroups = async () => {
 }
 
 export const getChannels = async () => {
-    return await fetch('http://dde555e60d40.ngrok.io/channels/')
+    return await fetch('http://8a11e5b6f41b.ngrok.io/channels/')
         .then(response => response.json())
         .then((data) => {
             return data
