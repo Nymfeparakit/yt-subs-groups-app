@@ -56,8 +56,8 @@ const ChannelsListScreen = ({ navigation }) => {
                         style={styles.bottomButton}
                         onPress={() => {
                             const selectedChannels = channels.filter(item => selectedIds.includes(item["id"]))
-                            navigation.navigate('Choose group', {channels: selectedChannels})
-                            }
+                            navigation.navigate('Choose group', { channels: selectedChannels })
+                        }
                         }>
                         <AntDesign name="pluscircle" size={24} color="black" />
                     </TouchableOpacity>
