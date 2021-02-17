@@ -4,12 +4,17 @@ import ChannelRect from '../components/ChannelRect'
 import Faker from 'faker'
 import { AntDesign } from '@expo/vector-icons'
 import { getChannels } from '../data/ApiHelper'
+import { List } from 'react-native-paper'
 
 
 const ChannelsListScreen = ({ navigation }) => {
 
     const [channels, setChannels] = useState([])
     const [selectedIds, setSelectedIds] = useState([])
+    const [expanded, setExpanded] = useState(true)
+    const [groupsArrItem, setGroupsArrItem] = useState([])
+
+    const handlePress = () => setExpanded(!expanded)
 
     const renderItem = ({ item, index }) => {
         const backgroundColor = selectedIds.includes(item["id"]) ? "#6e3b6e" : "#f9c2ff"
@@ -31,7 +36,28 @@ const ChannelsListScreen = ({ navigation }) => {
     }
 
     useEffect(() => {
-        getChannels().then(fetchedChannels => setChannels(fetchedChannels))
+        getChannels().then((fetchedChannels) => {
+            setChannels(fetchedChannels)
+            var groupsArrItemTmp = []
+            // for (const [groupName, groupChannelsList] of fetchedChannels[0].entries()) {
+            for (var groupName in fetchedChannels) {
+                groupChannelsList = fetchedChannels[groupName]
+                if (groupChannelsList.length == 0)
+                    continue
+                var channelsArrItem = []
+                for (const [index, channel] of groupChannelsList.entries()) {
+                    channelsArrItem.push(<List.Item key={channel["id"]} title={channel["title"]} />)
+                }
+                groupsArrItemTmp.push(
+                    <List.Accordion
+                        title={groupName}
+                        key={groupName}>
+                        {channelsArrItem}
+                    </List.Accordion>
+                )
+            }
+            setGroupsArrItem(groupsArrItemTmp)
+        })
         // tmpChannels = [];
         // for (var i = 0; i < 10; ++i) {
         //     tmpChannels.push({
@@ -44,12 +70,15 @@ const ChannelsListScreen = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            <FlatList
+            {/* <FlatList
                 data={channels}
                 renderItem={renderItem}
                 keyExtractor={item => item["title"]}
                 style={styles.list}
-            />
+            /> */}
+            <List.Section title="Channels">
+                {groupsArrItem}
+            </List.Section>
             {
                 typeof selectedIds !== 'undefined' && selectedIds.length > 0 ?
                     <TouchableOpacity
