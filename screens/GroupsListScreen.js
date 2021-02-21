@@ -3,11 +3,12 @@ import { View, FlatList, StyleSheet, TouchableOpacity, SafeAreaView } from 'reac
 import ChannelRect from '../components/ChannelRect'
 import Faker from 'faker'
 import { AntDesign } from '@expo/vector-icons'
+import { getGroups } from '../data/ApiHelper'
 
 
 const GroupsListScreen = ({ navigation }) => {
 
-    const [channels, setChannels] = useState([])
+    const [groups, setGroups] = useState([])
     const [selectedId, setSelectedId] = useState(null)
 
     const renderItem = ({ item, index}) => {
@@ -22,35 +23,33 @@ const GroupsListScreen = ({ navigation }) => {
                 id={index}
                 style={{ backgroundColor }}
                 onPress={() => onPress(index)}
-                title={item["title"]}
+                title={item["name"]}
                 icon_url={item["icon_url"]}
             />)
     }
 
     useEffect(() => {
-        // fetch('http://a3c81782cb7f.ngrok.io')
-        // .then(response => response.json())
-        // .then((data) => {
-        //     console.log(data)
-        //     setChannels(data)
-        // })
-        tmpChannels = [];
-        for (var i = 0; i < 20; ++i) {
-            tmpChannels.push({
-                'title': Faker.name.findName(),
-                'icon_url': Faker.image.cats()
-            })
-        }
-        setChannels(tmpChannels);
+        getGroups().then(fetchedGroups => {
+            console.log("groups: " + fetchedGroups)
+            setGroups(fetchedGroups)
+        })
+        // tmpChannels = [];
+        // for (var i = 0; i < 20; ++i) {
+            // tmpChannels.push({
+                // 'title': Faker.name.findName(),
+                // 'icon_url': Faker.image.cats()
+            // })
+        // }
+        // setChannels(tmpChannels);
     }, []);
 
     return (
         <SafeAreaView style={styles.container}>
             <FlatList
                 style={styles.list}
-                data={channels}
+                data={groups}
                 renderItem={renderItem}
-                keyExtractor={item => item["title"]}
+                keyExtractor={item => item["name"]}
             />
             <TouchableOpacity 
             style={styles.bottomButton}
