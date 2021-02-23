@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { View, FlatList, StyleSheet, TouchableOpacity, SafeAreaView } from 'react-native'
 import ChannelRect from '../components/ChannelRect'
+import GroupRect from '../components/GroupRect'
 import Faker from 'faker'
 import { AntDesign } from '@expo/vector-icons'
 import { getGroups } from '../data/ApiHelper'
@@ -19,12 +20,12 @@ const GroupsListScreen = ({ navigation }) => {
         }
 
         return (
-            <ChannelRect
-                id={index}
-                style={{ backgroundColor }}
-                onPress={() => onPress(index)}
-                title={item["name"]}
-                icon_url={item["icon_url"]}
+            <GroupRect
+                // id={index}
+                // style={{ backgroundColor }}
+                // onPress={() => onPress(index)}
+                // title={item["name"]}
+                // icon_url={item["icon_url"]}
             />)
     }
 
