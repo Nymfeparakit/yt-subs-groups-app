@@ -1,13 +1,14 @@
 import React from 'react';
-import { Text, TouchableWithoutFeedback, View } from 'react-native';
+import { Text, TouchableWithoutFeedback, View, TouchableOpacity } from 'react-native';
 
-const GroupRect = (/*{ onPress }*/) => {
+const GroupRect = ({ title, id, onPress }) => {
     return (
-        <TouchableWithoutFeedback>
+        <TouchableOpacity
+        onPress={() => onPress(id)}>
             <View flexDirection="row">
-                <Text>Group name</Text>
+                <Text>{ title }</Text>
             </View>
-        </TouchableWithoutFeedback>
+        </TouchableOpacity>
     )
 };
 
