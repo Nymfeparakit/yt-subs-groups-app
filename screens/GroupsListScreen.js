@@ -15,16 +15,20 @@ const GroupsListScreen = ({ navigation }) => {
     const renderItem = ({ item, index}) => {
         const backgroundColor = index === selectedId ? "#f9c2ff" : "#6e3b6e"
 
-        const onPress = (index) => {
-            setSelectedId(index)
+        const onPress = (id) => {
+            // setSelectedId(index)
+            navigation.navigate("Group videos", 
+            {
+                groupId: id
+            });
         }
 
         return (
             <GroupRect
-                // id={index}
+                id={item["id"]}
                 // style={{ backgroundColor }}
-                // onPress={() => onPress(index)}
-                // title={item["name"]}
+                onPress={onPress}
+                title={item["name"]}
                 // icon_url={item["icon_url"]}
             />)
     }
