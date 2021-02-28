@@ -36,7 +36,7 @@ export const createNewFeed = async (feedName) => {
 }
 
 export const getVideosForGroup = async (groupId) => {
-    return await fetch('fff')
+    return await fetch('http://c04ea33bef51.ngrok.io/feeds/' + groupId + '/')
     .then(response => response.json())
     .then((data) => {
         return data
