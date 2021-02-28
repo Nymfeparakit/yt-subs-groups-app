@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { getVideosForGroup } from '../data/ApiHelper';
 import { Image, FlatList, Text, SafeAreaView, View, StyleSheet } from 'react-native';
+import * as Linking from 'expo-linking';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const GroupVideosScreen = ({ route }) => {
 
@@ -14,12 +16,15 @@ const GroupVideosScreen = ({ route }) => {
 
     const renderItem = ({ item }) => {
         return (
-            <View>
-                <Image 
-                source={{uri: item["video_img_url"]}}
-                style={styles.videoImg}/>
-                <Text>{item["title"]}</Text>
-            </View>
+            <TouchableOpacity
+            onPress={() => Linking.openURL('https://www.youtube.com/watch?v=' + item["id"])}>
+                <View>
+                    <Image 
+                    source={{uri: item["video_img_url"]}}
+                    style={styles.videoImg}/>
+                    <Text>{item["title"]}</Text>
+                </View>
+            </TouchableOpacity>
         );
     };
 
