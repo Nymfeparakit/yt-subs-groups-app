@@ -52,9 +52,21 @@ export const getGroups = async () => {
 }
 
 export const getChannels = async () => {
-    return await fetch('http://8659686f3108.ngrok.io/channels/')
-        .then(response => response.json())
-        .then((data) => {
-            return data
+    // return await fetch('http://c04ea33bef51.ngrok.io/channels/')
+    //     .then(response => response.json())
+    //     .then((data) => {
+    //         return data
+    //     })
+    return new Promise((resolve, reject) => fetch(url)
+        .then(response => {
+            if (response.status !== 200) {
+                throw `${response.status}: ${response.statusText}`;
+            }
+            response.json()
+            .then(data => {
+                channels = channels.concat(data);
+                // if ()
+            })
         })
+    )
 }
