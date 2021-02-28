@@ -5,6 +5,7 @@ import Faker from 'faker'
 import { AntDesign } from '@expo/vector-icons'
 import { getChannels } from '../data/ApiHelper'
 import { List } from 'react-native-paper'
+import { ScrollView } from 'react-native-gesture-handler'
 
 
 const ChannelsListScreen = ({ navigation }) => {
@@ -76,9 +77,11 @@ const ChannelsListScreen = ({ navigation }) => {
                 keyExtractor={item => item["title"]}
                 style={styles.list}
             /> */}
+            <ScrollView>
             <List.Section title="Channels">
                 {groupsArrItem}
             </List.Section>
+            </ScrollView>
             {
                 typeof selectedIds !== 'undefined' && selectedIds.length > 0 ?
                     <TouchableOpacity
