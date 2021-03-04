@@ -2,7 +2,7 @@
 export const addChannelToGroup = (channelId, channelName, groupId) => {
     // console.log('group id: ' + groupId)
     // return 'ddd'
-    fetch('http://8659686f3108.ngrok.io/channels/', {
+    fetch('http://945b65311d57.ngrok.io/channels/', {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -24,7 +24,7 @@ export const addChannelToGroup = (channelId, channelName, groupId) => {
 }
 
 export const createNewFeed = async (feedName) => {
-    fetch('http://8659686f3108.ngrok.io/feeds/', {
+    fetch('http://945b65311d57.ngrok.io/feeds/', {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -36,7 +36,7 @@ export const createNewFeed = async (feedName) => {
 }
 
 export const getVideosForGroup = async (groupId) => {
-    return await fetch('http://c04ea33bef51.ngrok.io/feeds/' + groupId + '/')
+    return await fetch('http://945b65311d57.ngrok.io/feeds/' + groupId + '/')
     .then(response => response.json())
     .then((data) => {
         return data
@@ -44,20 +44,24 @@ export const getVideosForGroup = async (groupId) => {
 }
 
 export const getGroups = async () => {
-    return await fetch('http://8659686f3108.ngrok.io/feeds/')
+    return await fetch('http://945b65311d57.ngrok.io/feeds/')
         .then(response => response.json())
         .then((data) => {
             return data
         })
 }
 
-export const getChannels = async () => {
-    // return await fetch('http://c04ea33bef51.ngrok.io/channels/')
+export const getChannels = (nextPageToken = '', channels = []) => {
+    // return await fetch('http://945b65311d57.ngrok.io/channels/')
     //     .then(response => response.json())
     //     .then((data) => {
     //         return data
     //     })
-    return new Promise((resolve, reject) => fetch(url)
+    url = 'http://945b65311d57.ngrok.io/channels/' 
+        + (nextPageToken !== '' 
+        ? '?nextPageToken=' + nextPageToken 
+        : '');
+    return new Promise((resolve, reject) => {fetch(url)
         .then(response => {
             if (response.status !== 200) {
                 throw `${response.status}: ${response.statusText}`;
@@ -65,8 +69,14 @@ export const getChannels = async () => {
             response.json()
             .then(data => {
                 channels = channels.concat(data);
-                // if ()
-            })
-        })
-    )
+                if ("nextPageToken" in data) {
+                    resolve(getChannels(data["nextPageToken"], channels));
+                } else {
+                    console.log("resolving promise");
+                    channels = channels[0];
+                    delete channels["nextPageToken"];
+                    resolve(channels);
+                }
+            }).catch(err => reject(new Error(err.message)));
+        }).catch(err => reject(new Error(err.message)))});
 }

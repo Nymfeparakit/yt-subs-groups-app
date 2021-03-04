@@ -36,13 +36,15 @@ const ChannelsListScreen = ({ navigation }) => {
             />)
     }
 
-    useEffect(() => {
-        getChannels().then((fetchedChannels) => {
-            setChannels(fetchedChannels)
+    const successCallback = (fetchedChannels) => {
+            console.log("win with promise");
+            console.log(fetchedChannels);
+            setChannels(fetchedChannels);
             var groupsArrItemTmp = []
             // for (const [groupName, groupChannelsList] of fetchedChannels[0].entries()) {
-            for (var groupName in fetchedChannels) {
-                groupChannelsList = fetchedChannels[groupName]
+            for (var groupName in channels) {
+                console.log("group name: " + groupName);
+                const groupChannelsList = channels[groupName]
                 if (groupChannelsList.length == 0)
                     continue
                 var channelsArrItem = []
@@ -58,7 +60,11 @@ const ChannelsListScreen = ({ navigation }) => {
                 )
             }
             setGroupsArrItem(groupsArrItemTmp)
-        })
+        }
+    useEffect(() => {
+        getChannels()
+        .then(successCallback)
+        .catch(err => console.log("failed with promise again: " + err.message));
         // tmpChannels = [];
         // for (var i = 0; i < 10; ++i) {
         //     tmpChannels.push({
