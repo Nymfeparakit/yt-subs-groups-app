@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { View, FlatList, StyleSheet, TouchableOpacity } from 'react-native'
-import ChannelRect from '../components/ChannelRect'
 import Faker from 'faker'
 import { AntDesign } from '@expo/vector-icons'
 import { getChannels } from '../data/ApiHelper'
@@ -17,31 +16,12 @@ const ChannelsListScreen = ({ navigation }) => {
 
     const handlePress = () => setExpanded(!expanded)
 
-    const renderItem = ({ item, index }) => {
-        const backgroundColor = selectedIds.includes(item["id"]) ? "#6e3b6e" : "#f9c2ff"
-
-        const onPress = (id) => {
-            selectedIds.includes(id)
-                ? setSelectedIds(selectedIds.filter(item => item !== id))
-                : setSelectedIds([...selectedIds, id])
-        }
-
-        return (
-            <ChannelRect
-                id={item["id"]}
-                style={{ backgroundColor }}
-                onPress={() => onPress(item["id"])}
-                title={item["title"]}
-                icon_url={item["icon_url"]}
-            />)
-    }
-
     const successCallback = (fetchedChannels) => {
             console.log("win with promise");
             console.log(fetchedChannels);
             setChannels(fetchedChannels);
+            console.log("set channels");
             var groupsArrItemTmp = []
-            // for (const [groupName, groupChannelsList] of fetchedChannels[0].entries()) {
             for (var groupName in channels) {
                 console.log("group name: " + groupName);
                 const groupChannelsList = channels[groupName]
@@ -77,12 +57,6 @@ const ChannelsListScreen = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            {/* <FlatList
-                data={channels}
-                renderItem={renderItem}
-                keyExtractor={item => item["title"]}
-                style={styles.list}
-            /> */}
             <ScrollView>
             <List.Section title="Channels">
                 {groupsArrItem}
