@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { View, FlatList, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, FlatList, StyleSheet, TouchableOpacity, Image } from 'react-native'
 import Faker from 'faker'
 import { AntDesign } from '@expo/vector-icons'
 import { getChannels } from '../data/ApiHelper'
@@ -29,7 +29,18 @@ const ChannelsListScreen = ({ navigation }) => {
                     continue
                 var channelsArrItem = []
                 for (const [index, channel] of groupChannelsList.entries()) {
-                    channelsArrItem.push(<List.Item key={channel["id"]} title={channel["title"]} />)
+                    channelsArrItem.push(
+                        <List.Item 
+                            key={channel["id"]}
+                            title={channel["title"]}
+                            // left={props => < List.Icon {...props} icon={{ uri: channel["icon_url"]}}/>}
+                            // left={props => <List.Icon {...props} icon={() => {
+                                // <Image
+                                    // source={{ uri: channel["icon_url"]}}
+                                    // style={{width: 50, height: 50}}
+                                // />
+                            // }}/>}
+                        />)
                 }
                 groupsArrItemTmp.push(
                     <List.Accordion
