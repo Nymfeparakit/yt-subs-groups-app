@@ -69,18 +69,7 @@ const ChannelsListScreen = ({ navigation }) => {
     const successCallback = (fetchedChannels) => {
         console.log("set channels");
         setChannels(fetchedChannels);
-        var accordionDataArrayTmp = [];
-        console.log("channels: " + channels);
-        for (var groupName in channels) {
-            console.log("group name: " + groupName);
-            const channelsInGroup = channels[groupName];
-            if (channelsInGroup.length == 0) {
-                continue;
-            }
-            accordionDataArrayTmp.push({ title: groupName, content: groupName /*channelsInGroup*/ });
-        }
-        setAccordionDataArray(accordionDataArrayTmp);
-        console.log(accordionDataArray);
+
     };
 
     useEffect(() => {
@@ -97,7 +86,28 @@ const ChannelsListScreen = ({ navigation }) => {
         // setChannels(tmpChannels);
     }, []);
 
-    const renderAccordionContent = (content) => {
+    useEffect(() => {
+        var accordionDataArrayTmp = [];
+        for (var groupName in channels) {
+            console.log("group name: " + groupName);
+            const channelsInGroup = channels[groupName];
+            if (channelsInGroup.length == 0) {
+                continue;
+            }
+            accordionDataArrayTmp.push({ title: groupName.toString(), content: /*groupName*/ channelsInGroup });
+        }
+        setAccordionDataArray(accordionDataArrayTmp);
+        console.log("accordion data array was set");
+    }, [channels]);
+
+    // useEffect(() => {
+    //     console.log(accordionDataArray);
+    // }, [accordionDataArray]);
+
+    const renderAccordionContent = ( content ) => {
+        for (var key in content) {
+            console.log('Key in content: ' + key);
+        }
         return (
             <FlatList
                 data={content}
@@ -115,6 +125,7 @@ const ChannelsListScreen = ({ navigation }) => {
                 }
                 keyExtractor={item => item["id"]}
             />
+            // <Text>some text</Text>
         );
     }
 
@@ -126,8 +137,8 @@ const ChannelsListScreen = ({ navigation }) => {
                 {/* </List.Section> */}
                 <Accordion
                     dataArray={accordionDataArray}
-                    expanded={0}
-                    // renderContent={renderAccordionContent}
+                    expanded={[0]}
+                    renderContent={(accordionDataArray) => renderAccordionContent(accordionDataArray.content)}
                 />
             </ScrollView>
             {
