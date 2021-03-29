@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { View, FlatList, StyleSheet, TouchableOpacity, Image, Text } from 'react-native'
+import { View, FlatList, StyleSheet, TouchableOpacity, Image, Text, Touchable } from 'react-native'
 import Faker from 'faker'
 import { AntDesign } from '@expo/vector-icons'
 import { getChannels } from '../data/ApiHelper'
@@ -112,14 +112,21 @@ const ChannelsListScreen = ({ navigation }) => {
             <FlatList
                 data={content}
                 renderItem={({ item }) => {
+                    const channelBgColor = item["id"] in selectedIds ? "#E5BDF6" : "#D8DEDE";
+
                     return (
-                        <View style={{ flexDirection: 'row' }}>
+                        <TouchableOpacity
+                        // onLongPress={onChannelPress(item["id"])}
+                        >
+                        {/* <View style={[{backgroundColor: channelBgColor}, styles.channelView]}> */}
+                        <View style={styles.channelView}>
                             <Image
                                 source={{ uri: item["icon_url"] }}
                                 style={{ width: 50, height: 50 }}
                             />
                             <Text>{item["title"]}</Text>
                         </View>
+                        </TouchableOpacity>
                     );
                 }
                 }
@@ -127,7 +134,13 @@ const ChannelsListScreen = ({ navigation }) => {
             />
             // <Text>some text</Text>
         );
-    }
+    };
+
+    const renderAccordionHeader = (title) => {
+        return (
+            <Text style={styles.headerText}>{title}</Text>
+        );
+    };
 
     return (
         <View style={styles.container}>
@@ -139,6 +152,7 @@ const ChannelsListScreen = ({ navigation }) => {
                     dataArray={accordionDataArray}
                     expanded={[0]}
                     renderContent={(accordionDataArray) => renderAccordionContent(accordionDataArray.content)}
+                    renderHeader={(accordionDataArray) => renderAccordionHeader(accordionDataArray.title)}
                 />
             </ScrollView>
             {
@@ -169,6 +183,12 @@ const styles = StyleSheet.create({
     bottomButton: {
         flex: 1,
         alignSelf: 'center'
+    },
+    headerText: {
+        fontSize: 18
+    },
+    channelView: {
+        flexDirection: 'row',
     }
 })
 
