@@ -18,7 +18,7 @@ const ChannelsListScreen = ({ navigation }) => {
 
     const onChannelPress = (channelId) => {
         channelId in selectedIds ?
-            selectedIds.filter(item => item != channelId)
+            setSelectedIds(selectedIds.filter(item => item != channelId))
             : setSelectedIds([...selectedIds, channelId]);
     };
 
@@ -68,10 +68,10 @@ const ChannelsListScreen = ({ navigation }) => {
 
                     return (
                         <TouchableOpacity
-                        // onLongPress={onChannelPress(item["id"])}
+                        onLongPress={onChannelPress(item["id"])}
                         >
-                        {/* <View style={[{backgroundColor: channelBgColor}, styles.channelView]}> */}
-                        <View style={styles.channelView}>
+                        <View style={[{backgroundColor: channelBgColor}, styles.channelView]}>
+                        {/* <View style={styles.channelView}> */}
                             <Image
                                 source={{ uri: item["icon_url"] }}
                                 style={{ width: 50, height: 50 }}
