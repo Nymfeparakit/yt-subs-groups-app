@@ -1,8 +1,9 @@
+const API_URL = 'http://ebd4d3ddd765.ngrok.io/';
 
 export const addChannelToGroup = (channelId, channelName, groupId) => {
     // console.log('group id: ' + groupId)
     // return 'ddd'
-    fetch('http://945b65311d57.ngrok.io/channels/', {
+    fetch(`${API_URL}channels/`, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -24,7 +25,7 @@ export const addChannelToGroup = (channelId, channelName, groupId) => {
 }
 
 export const createNewFeed = async (feedName) => {
-    fetch('http://945b65311d57.ngrok.io/feeds/', {
+    fetch(`${API_URL}feeds/`, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -36,7 +37,7 @@ export const createNewFeed = async (feedName) => {
 }
 
 export const getVideosForGroup = async (groupId) => {
-    return await fetch('http://945b65311d57.ngrok.io/feeds/' + groupId + '/')
+    return await fetch(`${API_URL}feeds/` + groupId + '/')
     .then(response => response.json())
     .then((data) => {
         return data
@@ -44,7 +45,7 @@ export const getVideosForGroup = async (groupId) => {
 }
 
 export const getGroups = async () => {
-    return await fetch('http://945b65311d57.ngrok.io/feeds/')
+    return await fetch(`${API_URL}feeds/`)
         .then(response => response.json())
         .then((data) => {
             return data
@@ -52,12 +53,12 @@ export const getGroups = async () => {
 }
 
 export const getChannels = (nextPageToken = '', channels = []) => {
-    // return await fetch('http://945b65311d57.ngrok.io/channels/')
+    // return await fetch('${API_URL}channels/')
     //     .then(response => response.json())
     //     .then((data) => {
     //         return data
     //     })
-    url = 'http://945b65311d57.ngrok.io/channels/' 
+    url = `${API_URL}channels/` 
         + (nextPageToken !== '' 
         ? '?nextPageToken=' + nextPageToken 
         : '');
