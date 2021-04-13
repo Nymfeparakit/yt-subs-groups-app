@@ -23,49 +23,6 @@ const ChannelsListScreen = ({ navigation }) => {
             : setSelectedIds([...selectedIds, channelId]);
     };
 
-    // const successCallback = (fetchedChannels) => {
-    //     console.log("win with promise");
-    //     // console.log(fetchedChannels);
-    //     setChannels(fetchedChannels);
-    //     console.log("set channels");
-    //     var groupsArrItemTmp = []
-    //     for (var groupName in channels) {
-    //         console.log("group name: " + groupName);
-    //         const groupChannelsList = channels[groupName]
-    //         if (groupChannelsList.length == 0)
-    //             continue
-    //         var channelsArrItem = []
-    //         var channelsArr = [];
-    //         for (const [index, channel] of groupChannelsList.entries()) {
-    //             channelsArr.push(channel);
-    //         }
-    //         groupsArrItemTmp.push(
-    //             <List.Accordion
-    //                 title={groupName}
-    //                 key={groupName}>
-    //                 {/* {channelsArrItem} */}
-    //                 <FlatList
-    //                     data={channelsArr}
-    //                     renderItem={({ item }) => {
-    //                         return (
-    //                             <View style={{ flexDirection: 'row' }}>
-    //                                 <Image
-    //                                     source={{ uri: item["icon_url"] }}
-    //                                     style={{ width: 50, height: 50 }}
-    //                                 />                                   
-    //                                 <Text>{item["title"]}</Text>
-    //                             </View>
-    //                         );
-    //                     }
-    //                     }
-    //                     keyExtractor={item => item["id"]}
-    //                 />
-    //             </List.Accordion>
-    //         )
-    //     }
-    //     setGroupsArrItem(groupsArrItemTmp)
-    // }
-
     const successCallback = (fetchedChannels) => {
         console.log("set channels");
         setChannels(fetchedChannels);
