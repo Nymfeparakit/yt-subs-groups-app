@@ -12,7 +12,6 @@ const ChannelsListScreen = ({ navigation }) => {
     const [channels, setChannels] = useState([])
     const [selectedIds, setSelectedIds] = useState([])
     const [expanded, setExpanded] = useState(true)
-    const [groupsArrItem, setGroupsArrItem] = useState([])
     const [accordionDataArray, setAccordionDataArray] = useState([]);
 
     const handlePress = () => setExpanded(!expanded)
@@ -57,10 +56,6 @@ const ChannelsListScreen = ({ navigation }) => {
         console.log("accordion data array was set");
     }, [channels]);
 
-    // useEffect(() => {
-    //     console.log(accordionDataArray);
-    // }, [accordionDataArray]);
-
     const renderAccordionContent = ( content ) => {
         for (var key in content) {
             console.log('Key in content: ' + key);
@@ -89,7 +84,6 @@ const ChannelsListScreen = ({ navigation }) => {
                 }
                 keyExtractor={item => item["id"]}
             />
-            // <Text>some text</Text>
         );
     };
 
