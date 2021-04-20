@@ -59,9 +59,6 @@ const ChannelsListScreen = ({ navigation }) => {
     }, [channels]);
 
     const renderAccordionContent = ( content ) => {
-        for (var key in content) {
-            console.log('Key in content: ' + key);
-        }
         return (
             <FlatList
                 data={content}
@@ -85,6 +82,7 @@ const ChannelsListScreen = ({ navigation }) => {
                 }
                 }
                 keyExtractor={item => item["id"]}
+                extraData={selectedIds}
             />
         );
     };
