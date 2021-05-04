@@ -7,7 +7,7 @@ import { addChannelToGroup, getGroups } from '../data/ApiHelper'
 
 const ChooseGroupScreen = ({ route }) => {
 
-    const { channels } = route.params
+    const { channelsIds } = route.params
 
     const [groups, setGroups] = useState([])
     const [selectedId, setSelectedId] = useState(null)
@@ -21,7 +21,7 @@ const ChooseGroupScreen = ({ route }) => {
         //     })
         // }
         // setGroups(tmpGroups);
-        getGroups().then(groups => setGroups(groups))
+        getGroups().then(groups => setGroups(groups));
     }, [])
 
     const renderItem = ({ item, index }) => {
@@ -45,7 +45,7 @@ const ChooseGroupScreen = ({ route }) => {
                     <TouchableOpacity
                         style={styles.addButton}
                         onPress={() => {
-                            channels.map(channel => addChannelToGroup(channel['id'], channel['title'], selectedId))
+                            channelsIds.map(channelId => addChannelToGroup(channelId, selectedId));
                         }
                         }>
                         <Text>ADD TO GROUP</Text>
