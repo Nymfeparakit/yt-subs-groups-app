@@ -42,8 +42,8 @@ const GroupVideosScreen = ({ route }) => {
 
 const styles = StyleSheet.create({
         videoImg: {
-            width: 60,
-            height: 45
+            width: 120,
+            height: 90
         }
 });
 
