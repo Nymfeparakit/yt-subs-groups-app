@@ -17,7 +17,7 @@ const ChannelsListScreen = ({ navigation }) => {
     const handlePress = () => setExpanded(!expanded)
 
     const onChannelPress = (channelId) => {
-        if (channelId in selectedIds) {
+        if (selectedIds.indexOf(channelId) >= 0) {
             setSelectedIds(selectedIds.filter(item => item != channelId))
         } else {
             setSelectedIds([...selectedIds, channelId]);
@@ -56,14 +56,14 @@ const ChannelsListScreen = ({ navigation }) => {
         }
         setAccordionDataArray(accordionDataArrayTmp);
         console.log("accordion data array was set");
-    }, [channels]);
+    }, [channels, selectedIds]);
 
     const renderAccordionContent = ( content ) => {
         return (
             <FlatList
                 data={content}
                 renderItem={({ item }) => {
-                    const channelBgColor = item["id"] in selectedIds ? "#E5BDF6" : "#D8DEDE";
+                    const channelBgColor = selectedIds.indexOf(item["id"]) >= 0 ? "#E5BDF6" : "#D8DEDE";
 
                     return (
                         <TouchableOpacity
