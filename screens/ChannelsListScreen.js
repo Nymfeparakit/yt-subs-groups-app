@@ -67,7 +67,7 @@ const ChannelsListScreen = ({ navigation }) => {
 
                     return (
                         <TouchableOpacity
-                        onLongPress={() => onChannelPress(item["id"])}
+                        onPress={() => onChannelPress(item["id"])}
                         >
                         <View style={[{backgroundColor: channelBgColor}, styles.channelView]}>
                         {/* <View style={styles.channelView}> */}
