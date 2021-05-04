@@ -3,9 +3,10 @@ import { View, FlatList, StyleSheet, TouchableOpacity, Image, Text, Touchable } 
 import Faker from 'faker'
 import { AntDesign } from '@expo/vector-icons'
 import { getChannels } from '../data/ApiHelper'
-import { List } from 'react-native-paper'
+import { ActivityIndicator } from 'react-native-paper'
 import { ScrollView } from 'react-native-gesture-handler'
 import { Accordion } from 'native-base';
+import { useIsFocused } from '@react-navigation/native'
 
 const ChannelsListScreen = ({ navigation }) => {
 
@@ -13,6 +14,8 @@ const ChannelsListScreen = ({ navigation }) => {
     const [selectedIds, setSelectedIds] = useState([])
     const [expanded, setExpanded] = useState(true)
     const [accordionDataArray, setAccordionDataArray] = useState([]);
+    const isFocused = useIsFocused();
+    const [loading, setLoading] = useState(true);
 
     const handlePress = () => setExpanded(!expanded)
 
@@ -27,13 +30,16 @@ const ChannelsListScreen = ({ navigation }) => {
     const successCallback = (fetchedChannels) => {
         console.log("set channels");
         setChannels(fetchedChannels);
+        setLoading(false);
 
     };
 
     useEffect(() => {
+        setLoading(true);
         getChannels()
             .then(successCallback)
             .catch(err => console.log("failed with promise again: " + err.message));
+        setSelectedIds([]);
         // tmpChannels = [];
         // for (var i = 0; i < 10; ++i) {
         //     tmpChannels.push({
@@ -42,7 +48,7 @@ const ChannelsListScreen = ({ navigation }) => {
         //     })
         // }
         // setChannels(tmpChannels);
-    }, []);
+    }, [isFocused]); // fetch data every time screen is focused again
 
     useEffect(() => {
         var accordionDataArrayTmp = [];
@@ -95,19 +101,20 @@ const ChannelsListScreen = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            <ScrollView>
-                {/* <List.Section title="Channels"> */}
-                {/* {groupsArrItem} */}
-                {/* </List.Section> */}
-                <Accordion
-                    dataArray={accordionDataArray}
-                    expanded={[0]}
-                    renderContent={(accordionDataArray) => renderAccordionContent(accordionDataArray.content)}
-                    renderHeader={(accordionDataArray) => renderAccordionHeader(accordionDataArray.title)}
-                />
-            </ScrollView>
             {
-                typeof selectedIds !== 'undefined' && selectedIds.length > 0 ?
+                loading 
+                ? <ActivityIndicator size="large" />
+                : <ScrollView>
+                    <Accordion
+                        dataArray={accordionDataArray}
+                        expanded={[-1]}
+                        renderContent={(accordionDataArray) => renderAccordionContent(accordionDataArray.content)}
+                        renderHeader={(accordionDataArray) => renderAccordionHeader(accordionDataArray.title)}
+                    />
+                </ScrollView>
+            }       
+            {
+                !loading && typeof selectedIds !== 'undefined' && selectedIds.length > 0 ?
                     <TouchableOpacity
                         style={styles.bottomButton}
                         onPress={() => {
