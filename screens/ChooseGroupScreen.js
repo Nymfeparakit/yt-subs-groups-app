@@ -6,7 +6,7 @@ import { addChannelToGroup, getGroups } from '../data/ApiHelper'
 import { OTHER_GROUP_ID } from '../constants/Constants'
 
 
-const ChooseGroupScreen = ({ route }) => {
+const ChooseGroupScreen = ({ route, navigation: { goBack } }) => {
 
     const { channelsIds } = route.params
 
@@ -47,6 +47,7 @@ const ChooseGroupScreen = ({ route }) => {
                         style={styles.addButton}
                         onPress={() => {
                             channelsIds.map(channelId => addChannelToGroup(channelId, selectedId));
+                            goBack();
                         }
                         }>
                         <Text>ADD TO GROUP</Text>
