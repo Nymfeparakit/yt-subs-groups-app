@@ -3,6 +3,7 @@ import RadioButton from '../components/RadioButton'
 import { FlatList, TouchableOpacity, Button, View, StyleSheet, Text } from 'react-native'
 import Faker from 'faker'
 import { addChannelToGroup, getGroups } from '../data/ApiHelper'
+import { OTHER_GROUP_ID } from '../constants/Constants'
 
 
 const ChooseGroupScreen = ({ route }) => {
@@ -21,7 +22,7 @@ const ChooseGroupScreen = ({ route }) => {
         //     })
         // }
         // setGroups(tmpGroups);
-        getGroups().then(groups => setGroups(groups));
+        getGroups().then(groups => setGroups([...groups, {"name": "Other", "id": OTHER_GROUP_ID}]));
     }, [])
 
     const renderItem = ({ item, index }) => {
