@@ -1,6 +1,6 @@
-const API_URL = 'http://ebd4d3ddd765.ngrok.io/';
+const API_URL = 'http://6c8c65935d27.ngrok.io/';
 
-export const addChannelToGroup = (channelId, channelName, groupId) => {
+export const addChannelToGroup = (channelId, groupId) => {
     // console.log('group id: ' + groupId)
     // return 'ddd'
     fetch(`${API_URL}channels/`, {
@@ -11,7 +11,6 @@ export const addChannelToGroup = (channelId, channelName, groupId) => {
         },
         body: JSON.stringify({
             id: channelId,
-            name: channelName,
             feed_id: groupId
         })
     })
@@ -48,7 +47,7 @@ export const getGroups = async () => {
     return await fetch(`${API_URL}feeds/`)
         .then(response => response.json())
         .then((data) => {
-            return data
+            return data["results"];
         })
 }
 
