@@ -142,7 +142,10 @@ const styles = StyleSheet.create({
         alignSelf: 'center'
     },
     headerText: {
-        fontSize: 18
+        fontSize: 18,
+        paddingVertical: 10,
+        paddingLeft: 5,
+        borderBottomWidth: 1
     },
     channelView: {
         flexDirection: 'row',
