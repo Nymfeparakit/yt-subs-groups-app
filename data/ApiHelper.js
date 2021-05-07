@@ -1,6 +1,6 @@
 import { OTHER_GROUP_ID } from '../constants/Constants'
 
-const API_URL = 'http://a2089077943d.ngrok.io/';
+const API_URL = 'http://b80bf9e0b21d.ngrok.io/';
 
 export const addChannelToGroup = (channelId, groupId) => {
     if (groupId == OTHER_GROUP_ID) {
@@ -30,8 +30,8 @@ export const deleteChannel = async (channelId) => {
     return await fetch(`${API_URL}channels/` + channelId + '/', {
         method: 'DELETE'
     })
-    .then(response => response.json())
-    .then(data => { return data; })
+        .then(response => response.json())
+        .then(data => { return data; })
 }
 
 export const createNewFeed = async (feedName) => {
@@ -43,15 +43,15 @@ export const createNewFeed = async (feedName) => {
         },
         body: JSON.stringify({ name: feedName })
     }).then(response => response.json())
-    .then(data => console.log("posted new feed"))
+        .then(data => console.log("posted new feed"))
 }
 
 export const getVideosForGroup = async (groupId) => {
     return await fetch(`${API_URL}feeds/` + groupId + '/')
-    .then(response => response.json())
-    .then((data) => {
-        return data
-    })
+        .then(response => response.json())
+        .then((data) => {
+            return data
+        })
 }
 
 export const getGroups = async () => {
@@ -62,32 +62,53 @@ export const getGroups = async () => {
         })
 }
 
-export const getChannels = (nextPageToken = '', channels = []) => {
-    // return await fetch('${API_URL}channels/')
-    //     .then(response => response.json())
-    //     .then((data) => {
-    //         return data
-    //     })
-    url = `${API_URL}channels/` 
-        + (nextPageToken !== '' 
-        ? '?nextPageToken=' + nextPageToken 
-        : '');
-    return new Promise((resolve, reject) => {fetch(url)
+const mergeChannelJSONObjs = (obj1, obj2) => {
+    const keys1 = Object.keys(obj1);
+    const keys2 = Object.keys(obj2);
+    // union keys without duplicates
+    const keys_union = keys1.concat(keys2.filter((item) => keys1.indexOf(item) < 0));
+    const result = {};
+    keys_union.forEach(function (key) {
+        if (obj1[key]) {
+            result[key] = [...obj1[key]];
+            obj2[key].forEach((channel => {
+                if (result[key].find(o => o["id"] === channel["id"]) === undefined) {
+                    result[key].push(channel);
+                }
+            }));
+        } else {
+            result[key] = [...obj2[key]];
+        }
+    });
+    return result;
+}
+
+export const getChannels = (nextPageToken = '', channels = {}) => {
+    url = `${API_URL}channels/`
+        + (nextPageToken !== ''
+            ? '?nextPageToken=' + nextPageToken
+            : '');
+    return new Promise((resolve, reject) => {
+        fetch(url)
         .then(response => {
             if (response.status !== 200) {
                 throw `${response.status}: ${response.statusText}`;
             }
             response.json()
-            .then(data => {
-                channels = channels.concat(data);
-                if ("nextPageToken" in data) {
-                    resolve(getChannels(data["nextPageToken"], channels));
-                } else {
-                    console.log("resolving promise");
-                    channels = channels[0];
-                    delete channels["nextPageToken"];
-                    resolve(channels);
-                }
-            }).catch(err => reject(new Error(err.message)));
-        }).catch(err => reject(new Error(err.message)))});
+                .then(data => {
+                    nextPageToken = data["nextPageToken"];
+                    console.log("next page token: " + nextPageToken);
+                    if ("nextPageToken" in data) {
+                        delete data["nextPageToken"];
+                    }
+                    channels = mergeChannelJSONObjs(channels, data);
+                    if (nextPageToken !== undefined && nextPageToken !== '') {
+                        resolve(getChannels(nextPageToken, channels));
+                    } else {
+                        console.log("resolving promise");
+                        resolve(channels);
+                    }
+                }).catch(err => reject(new Error(err.message)));
+        }).catch(err => reject(new Error(err.message)))
+    });
 }
