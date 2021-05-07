@@ -12,8 +12,7 @@ const CreateNewGroupScreen = ({ navigation: { goBack } }) => {
             <TextInput 
             // onSubmitEditing={(event) => createFeed(event.nativeEvent.text)}
             onSubmitEditing={(event) => {
-                createNewFeed(event.nativeEvent.text);
-                goBack();
+                createNewFeed(event.nativeEvent.text).then(() => goBack());
             }}
             style={styles.nameInput}
             />
