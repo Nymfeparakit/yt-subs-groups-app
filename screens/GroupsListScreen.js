@@ -1,26 +1,26 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import { View, FlatList, StyleSheet, TouchableOpacity, SafeAreaView } from 'react-native'
 import ChannelRect from '../components/ChannelRect'
 import GroupRect from '../components/GroupRect'
 import Faker from 'faker'
 import { AntDesign } from '@expo/vector-icons'
 import { getGroups } from '../data/ApiHelper'
-
+import { useFocusEffect } from '@react-navigation/native'
 
 const GroupsListScreen = ({ navigation }) => {
 
     const [groups, setGroups] = useState([])
     const [selectedId, setSelectedId] = useState(null)
 
-    const renderItem = ({ item, index}) => {
+    const renderItem = ({ item, index }) => {
         const backgroundColor = index === selectedId ? "#f9c2ff" : "#6e3b6e"
 
         const onPress = (id) => {
             // setSelectedId(index)
-            navigation.navigate("Group videos", 
-            {
-                groupId: id
-            });
+            navigation.navigate("Group videos",
+                {
+                    groupId: id
+                });
         }
 
         return (
@@ -29,24 +29,25 @@ const GroupsListScreen = ({ navigation }) => {
                 // style={{ backgroundColor }}
                 onPress={onPress}
                 title={item["name"]}
-                // icon_url={item["icon_url"]}
+            // icon_url={item["icon_url"]}
             />)
     }
 
-    useEffect(() => {
-        getGroups().then(fetchedGroups => {
-            console.log("groups: " + fetchedGroups)
-            setGroups(fetchedGroups)
-        })
-        // tmpChannels = [];
-        // for (var i = 0; i < 20; ++i) {
+    useFocusEffect(
+        useCallback(() => {
+            getGroups().then(fetchedGroups => {
+                setGroups(fetchedGroups)
+            })
+            // tmpChannels = [];
+            // for (var i = 0; i < 20; ++i) {
             // tmpChannels.push({
-                // 'title': Faker.name.findName(),
-                // 'icon_url': Faker.image.cats()
+            // 'title': Faker.name.findName(),
+            // 'icon_url': Faker.image.cats()
             // })
-        // }
-        // setChannels(tmpChannels);
-    }, []);
+            // }
+            // setChannels(tmpChannels);
+        }, [])
+    );
 
     return (
         <SafeAreaView style={styles.container}>
@@ -56,9 +57,9 @@ const GroupsListScreen = ({ navigation }) => {
                 renderItem={renderItem}
                 keyExtractor={item => item["name"]}
             />
-            <TouchableOpacity 
-            style={styles.bottomButton}
-            onPress={() => navigation.navigate('New group')}>
+            <TouchableOpacity
+                style={styles.bottomButton}
+                onPress={() => navigation.navigate('New group')}>
                 <AntDesign name="pluscircle" size={24} color="black" />
             </TouchableOpacity>
         </SafeAreaView>
