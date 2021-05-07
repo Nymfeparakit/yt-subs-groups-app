@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Text, TextInput, View, StyleSheet } from 'react-native'
 import { createNewFeed } from '../data/ApiHelper'
 
-const CreateNewGroupScreen = () => {
+const CreateNewGroupScreen = ({ navigation: { goBack } }) => {
 
     const [groupName, setGroupName] = useState('')
 
@@ -11,7 +11,10 @@ const CreateNewGroupScreen = () => {
             <Text style={styles.nameLbl}>Name:</Text>
             <TextInput 
             // onSubmitEditing={(event) => createFeed(event.nativeEvent.text)}
-            onSubmitEditing={(event) => createNewFeed(event.nativeEvent.text)}
+            onSubmitEditing={(event) => {
+                createNewFeed(event.nativeEvent.text);
+                goBack();
+            }}
             style={styles.nameInput}
             />
         </View>
