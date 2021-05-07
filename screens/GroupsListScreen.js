@@ -4,7 +4,7 @@ import ChannelRect from '../components/ChannelRect'
 import GroupRect from '../components/GroupRect'
 import Faker from 'faker'
 import { AntDesign } from '@expo/vector-icons'
-import { getGroups } from '../data/ApiHelper'
+import { getGroups, deleteGroup } from '../data/ApiHelper'
 import { useFocusEffect } from '@react-navigation/native'
 
 const GroupsListScreen = ({ navigation }) => {
@@ -13,7 +13,6 @@ const GroupsListScreen = ({ navigation }) => {
     const [selectedId, setSelectedId] = useState(null)
 
     const renderItem = ({ item, index }) => {
-        const backgroundColor = index === selectedId ? "#f9c2ff" : "#6e3b6e"
 
         const onPress = (id) => {
             // setSelectedId(index)
@@ -23,30 +22,49 @@ const GroupsListScreen = ({ navigation }) => {
                 });
         }
 
+        const onLongPress = (id) => {
+            setSelectedId(id);
+        }
+
+        const onRemovePress = (id) => {
+            console.log("remove pressed");
+            deleteGroup(id)
+            .then(() => {
+                setSelectedId(null);
+                fetchGroups();
+            })
+            .catch(err => console.log("failed deleting group: " + err.message));
+        }
+
         return (
             <GroupRect
                 id={item["id"]}
                 // style={{ backgroundColor }}
                 onPress={onPress}
+                onLongPress={onLongPress}
+                onRemovePress={onRemovePress}
+                isSelected={item["id"] === selectedId}
                 title={item["name"]}
             // icon_url={item["icon_url"]}
             />)
     }
 
+    const fetchGroups = () => {
+        getGroups().then(fetchedGroups => {
+            setGroups(fetchedGroups)
+        })
+        // tmpChannels = [];
+        // for (var i = 0; i < 20; ++i) {
+        // tmpChannels.push({
+        // 'title': Faker.name.findName(),
+        // 'icon_url': Faker.image.cats()
+        // })
+        // }
+        // setChannels(tmpChannels);
+    }
+
     useFocusEffect(
-        useCallback(() => {
-            getGroups().then(fetchedGroups => {
-                setGroups(fetchedGroups)
-            })
-            // tmpChannels = [];
-            // for (var i = 0; i < 20; ++i) {
-            // tmpChannels.push({
-            // 'title': Faker.name.findName(),
-            // 'icon_url': Faker.image.cats()
-            // })
-            // }
-            // setChannels(tmpChannels);
-        }, [])
+        useCallback(() => fetchGroups(), [])
     );
 
     return (

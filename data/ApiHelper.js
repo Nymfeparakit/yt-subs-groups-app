@@ -1,6 +1,6 @@
 import { OTHER_GROUP_ID } from '../constants/Constants'
 
-const API_URL = 'http://b80bf9e0b21d.ngrok.io/';
+const API_URL = 'http://51116cf96cb0.ngrok.io/';
 
 export const addChannelToGroup = (channelId, groupId) => {
     if (groupId == OTHER_GROUP_ID) {
@@ -30,8 +30,8 @@ export const deleteChannel = async (channelId) => {
     return await fetch(`${API_URL}channels/` + channelId + '/', {
         method: 'DELETE'
     })
-        .then(response => response.json())
-        .then(data => { return data; })
+        // .then(response => response.json())
+        // .then(data => { return data; })
 }
 
 export const createNewFeed = async (feedName) => {
@@ -60,6 +60,14 @@ export const getGroups = async () => {
         .then((data) => {
             return data["results"];
         })
+}
+
+export const deleteGroup = async (groupId) => {
+    return await fetch(`${API_URL}feeds/` + groupId + '/', {
+        method: 'DELETE'
+    })
+    // .then(response => response.json())
+    // .then(data => { return data; });
 }
 
 const mergeChannelJSONObjs = (obj1, obj2) => {
