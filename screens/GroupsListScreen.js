@@ -15,7 +15,6 @@ const GroupsListScreen = ({ navigation }) => {
     const renderItem = ({ item, index }) => {
 
         const onPress = (id) => {
-            // setSelectedId(index)
             navigation.navigate("Group videos",
                 {
                     groupId: id
@@ -39,7 +38,6 @@ const GroupsListScreen = ({ navigation }) => {
         return (
             <GroupRect
                 id={item["id"]}
-                // style={{ backgroundColor }}
                 onPress={onPress}
                 onLongPress={onLongPress}
                 onRemovePress={onRemovePress}
@@ -53,14 +51,6 @@ const GroupsListScreen = ({ navigation }) => {
         getGroups().then(fetchedGroups => {
             setGroups(fetchedGroups)
         })
-        // tmpChannels = [];
-        // for (var i = 0; i < 20; ++i) {
-        // tmpChannels.push({
-        // 'title': Faker.name.findName(),
-        // 'icon_url': Faker.image.cats()
-        // })
-        // }
-        // setChannels(tmpChannels);
     }
 
     useFocusEffect(
@@ -91,7 +81,6 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between'
     },
     list: {
-        // flex: 5
         height: '80%'
     },
     bottomButton: {
