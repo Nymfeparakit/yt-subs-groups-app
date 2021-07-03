@@ -18,11 +18,11 @@ const GroupVideosScreen = ({ route }) => {
         return (
             <TouchableOpacity
             onPress={() => Linking.openURL('https://www.youtube.com/watch?v=' + item["id"])}>
-                <View>
+                <View style={styles.container}>
                     <Image 
                     source={{uri: item["video_img_url"]}}
                     style={styles.videoImg}/>
-                    <Text>{item["title"]}</Text>
+                    <Text style={styles.videoTitle}>{item["title"]}</Text>
                 </View>
             </TouchableOpacity>
         );
@@ -41,9 +41,17 @@ const GroupVideosScreen = ({ route }) => {
 };
 
 const styles = StyleSheet.create({
+        container: {
+            marginHorizontal: 10
+        },
         videoImg: {
             width: 120,
             height: 90
+        },
+        videoTitle: {
+            fontWeight: 'bold',
+            marginTop: 5,
+            marginBottom: 20
         }
 });
 
